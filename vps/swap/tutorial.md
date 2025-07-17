@@ -9,7 +9,7 @@ Script ini membantu kamu menambahkan swap memory di VPS berbasis Ubuntu secara *
 ### 📦 Cara Pakai
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/koderudi/tools/refs/heads/main/vps/swap/swap-id.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/koderudi/tools/main/vps/swap/swap-id.sh -o setup-swap.sh && chmod +x setup-swap.sh && sudo ./setup-swap.sh
 ```
 
 
@@ -31,7 +31,7 @@ curl -sSL https://raw.githubusercontent.com/koderudi/tools/refs/heads/main/vps/s
 ### 📦 How to Use
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/koderudi/tools/refs/heads/main/vps/swap/swap-en.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/koderudi/tools/main/vps/swap/swap-en.sh -o setup-swap.sh && chmod +x setup-swap.sh && sudo ./setup-swap.sh
 ```
 
 

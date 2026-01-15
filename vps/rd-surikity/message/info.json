@@ -1,1 +1,39 @@
-.
+{
+  "meta": {
+    "project": "RD Surikity",
+    "maintainer": "koderudi",
+    "last_update": "2026-01-15T00:00:00Z"
+  },
+
+  "messages": [
+    {
+      "id": "welcome-001",
+      "type": "info",
+      "title": "Welcome to RD Surikity",
+      "body": "RD Surikity aktif.",
+      "show_on": ["install"],
+      "min_version": "3.0",
+      "expires": null
+    },
+
+    {
+      "id": "security-ssh-2026",
+      "type": "warning",
+      "title": "SSH Hardening Recommendation",
+      "body": "Disarankan disable root login dan gunakan key-only auth.",
+      "show_on": ["install", "status"],
+      "min_version": "3.1",
+      "expires": "2026-06-01"
+    },
+
+    {
+      "id": "fail2ban-action-change",
+      "type": "critical",
+      "title": "Fail2Ban Action Update",
+      "body": "wait.",
+      "show_on": ["status"],
+      "min_version": "3.1",
+      "expires": null
+    }
+  ]
+}

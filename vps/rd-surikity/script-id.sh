@@ -12,7 +12,8 @@ CACHE_DIR="/var/cache/rd-surikity"
 CACHE_FILE="$CACHE_DIR/info.json"
 INFO_URL="https://raw.githubusercontent.com/koderudi/tools/main/vps/rd-surikity/message/info.json"
 
-SCRIPT_SHA256=""
+CHECKSUM_URL="https://raw.githubusercontent.com/koderudi/tools/main/vps/rd-surikity/security/checksum.txt"
+SCRIPT_NAME="$(basename "$0")"
 
 NO_TELEGRAM=false
 UPDATE_MODE=false
@@ -29,16 +30,37 @@ done
 [[ $EUID -ne 0 ]] && echo "❌ Run as root" && exit 1
 
 ### ============================
-### CHECKSUM VERIFY
+### CHECKSUM VERIFY (REMOTE)
 ### ============================
-if ! $NO_CHECKSUM; then
-  SELF_HASH=$(sha256sum "$0" | awk '{print $1}')
-  if [[ "$SELF_HASH" != "$SCRIPT_SHA256" ]]; then
-    echo "❌ Checksum mismatch"
-    echo "Expected: $SCRIPT_SHA256"
-    echo "Got     : $SELF_HASH"
+verify_checksum() {
+  echo "🔐 Verifying checksum..."
+
+  TMP_SUM=$(mktemp)
+
+  if ! curl -fsSL "$CHECKSUM_URL" -o "$TMP_SUM"; then
+    echo "❌ Failed to fetch checksum file"
+    rm -f "$TMP_SUM"
     exit 1
   fi
+
+  grep -q "$SCRIPT_NAME" "$TMP_SUM" || {
+    echo "❌ Checksum entry not found for $SCRIPT_NAME"
+    rm -f "$TMP_SUM"
+    exit 1
+  }
+
+  (cd "$(dirname "$0")" && sha256sum -c "$TMP_SUM") || {
+    echo "❌ Checksum verification failed"
+    rm -f "$TMP_SUM"
+    exit 1
+  }
+
+  rm -f "$TMP_SUM"
+  echo "✅ Checksum OK"
+}
+
+if ! $NO_CHECKSUM; then
+  verify_checksum
 fi
 
 ### ============================

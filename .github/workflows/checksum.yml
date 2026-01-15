@@ -1,0 +1,39 @@
+name: Update RD Surikity checksum
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'tools/vps/rd-surikity/script-id.sh'
+
+permissions:
+  contents: write
+
+jobs:
+  checksum:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate checksum
+        run: |
+          cd tools/vps/rd-surikity
+          sha256sum script-id.sh > security/checksum.txt
+
+      - name: Commit checksum
+        run: |
+          git config user.name "rd-surikity-bot"
+          git config user.email "rd-surikity@users.noreply.github.com"
+
+          git add tools/vps/rd-surikity/security/checksum.txt
+
+          if git diff --cached --quiet; then
+            echo "No checksum changes"
+            exit 0
+          fi
+
+          git commit -m "chore(security): update checksum"
+          git push

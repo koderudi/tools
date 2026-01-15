@@ -12,7 +12,7 @@ CACHE_DIR="/var/cache/rd-surikity"
 CACHE_FILE="$CACHE_DIR/info.json"
 INFO_URL="https://raw.githubusercontent.com/koderudi/tools/main/vps/rd-surikity/message/info.json"
 
-SCRIPT_SHA256="f91788b20f91d43275d3ab9ca590866f591b0e0ac1655862abc674fdaacd853b"
+SCRIPT_SHA256=""
 
 NO_TELEGRAM=false
 UPDATE_MODE=false
